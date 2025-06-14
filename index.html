@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不朽幻都 | Immortopia: A Cyberpunk Monopoly</title>
+    
+    <!-- Google Fonts - Noto Sans TC (繁體中文) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Swiper CSS CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Vue.js CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- 自定義樣式文件 -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="fixed top-0 left-0 right-0 z-50">
+            <div class="container mx-auto px-8 py-6">
+                <div class="flex items-center justify-between">
+                    <!-- 左上角 Logo -->
+                    <div class="logo-container">
+                        <img src="images/Logo.png" alt="不朽幻都 Logo" class="h-24 w-auto">
+                    </div>
+
+                    <!-- 右上角導航按鈕 -->
+                    <div class="nav-container relative">
+                        <img src="images/Header_Button_Bar.png" alt="Navigation Background" class="nav-bg">
+                        <div class="nav-buttons absolute inset-0 flex items-center justify-center space-x-8">
+                            <a href="#" @click="goToSlide(0)" class="nav-item text-xl text-white hover:text-blue-400">主頁</a>
+                            <a href="#" @click="goToSlide(1)" class="nav-item text-xl text-white hover:text-blue-400">角色介紹</a>
+                            <a href="#" @click="goToSlide(2)" class="nav-item text-xl text-white hover:text-blue-400">場景圖</a>
+                            <a href="#" @click="goToSlide(3)" class="nav-item text-xl text-white hover:text-blue-400">小遊戲</a>
+                        </div>
+                    </div>
+
+                    <!-- 手機版選單按鈕 -->
+                    <button @click="toggleMobileMenu" class="md:hidden text-white bg-black bg-opacity-50 p-3 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 手機版導航選單 -->
+            <div v-show="mobileMenuOpen" class="md:hidden bg-black bg-opacity-90 mx-6 rounded-lg p-4 mt-4 z-50 relative">
+                <div class="flex flex-col space-y-4">
+                    <a href="#" @click="goToSlide(0)" class="nav-item text-white hover:text-blue-400">主頁</a>
+                    <a href="#" @click="goToSlide(1)" class="nav-item text-white hover:text-blue-400">角色介紹</a>
+                    <a href="#" @click="goToSlide(2)" class="nav-item text-white hover:text-blue-400">場景圖</a>
+                    <a href="#" @click="goToSlide(3)" class="nav-item text-white hover:text-blue-400">小遊戲</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Swiper 容器 -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <!-- 第一頁：首頁/遊戲介紹 -->
+                <div class="swiper-slide home-slide">
+                    <div class="slide-content relative h-full">
+                        <div class="container mx-auto px-8 h-full relative">
+                            <!-- 右下角描述文字 -->
+                            <div class="absolute bottom-8 right-0 max-w-md text-right">
+                            <div class="p-6 rounded-lg backdrop-blur-sm">
+                                <h2 class="text-5xl font-bold text-white mb-4 cyber-text-glow">
+                                    不朽幻都
+                                </h2>
+                                <p class="text-xl text-gray-300 leading-relaxed mb-2">
+                                    21世紀末
+                                </p>
+                                <p class="text-xl text-gray-300 leading-relaxed mb-2">
+                                    適合人類生存
+                                </p>
+                                <p class="text-xl text-gray-300 leading-relaxed mb-2">
+                                    仍有秩序的地方僅剩一處
+                                </p>
+                                <p class="text-xl text-gray-300 leading-relaxed mb-2">
+                                    一個由巨型天幕包覆
+                                </p>
+                                <p class="text-xl text-gray-300 leading-relaxed mb-2">
+                                    各區塊獨立
+                                </p>
+                                <p class="text-xl text-gray-300 leading-relaxed mb-2">
+                                    漂浮於空中的城市
+                                </p>
+                                <p class="text-xl text-gray-300 leading-relaxed">
+                                    人們稱其為不朽幻都。
+                                </p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第二頁：角色介紹 -->
+                <div class="swiper-slide character-slide">
+                    <div class="character-page-container flex flex-col lg:flex-row w-full max-w-7xl gap-4 lg:gap-8 p-4 lg:p-8 lg:pb-16 relative z-10">
+                        <!-- 左側：角色立繪和名字 -->
+                        <div class="flex flex-col items-center w-full lg:w-1/2 h-full">
+                            <div class="flex items-center justify-center flex-grow w-full">
+                                <img src="images/Art-Danma Yoko New.png" alt="彈間陽子" class="max-w-full max-h-80 lg:max-h-full lg:max-w-full w-auto h-auto object-contain character-image">
+                            </div>
+                            <div class="character-name-box mt-1 lg:mt-2 flex-shrink-0">
+                                <h2 class="text-white text-3xl lg:text-5xl font-bold m-0 text-center cyber-text-glow">彈間陽子</h2>
+                            </div>
+                        </div>
+
+                        <!-- 右側：技能描述、雷達圖、棋子和頭像 -->
+                        <div class="flex flex-col w-full lg:w-1/2 gap-2 lg:gap-3 justify-between">
+                            <!-- 技能描述 -->
+                            <div class="glass-effect p-4 lg:p-6 rounded-2xl border border-cyan-400 border-opacity-30">
+                                <h3 class="text-cyan-400 text-xl lg:text-2xl font-bold mb-3 lg:mb-4 skill-title">技能：</h3>
+                                <p class="text-white text-base lg:text-lg leading-relaxed m-0">
+                                    指定自己一個土地，道路費用上升，只能營加一次並且持續，增加當前房地產價值的25%，最多三塊土地，有人踩到並付完道路費或失去所有有關利技能效果消失，但將直接獲得不受技能影響。
+                                </p>
+                            </div>
+
+                            <!-- 雷達圖 -->
+                            <div class="flex flex-col lg:flex-row gap-3 lg:gap-4 justify-center max-w-2xl mx-auto">
+                                <img src="images/技能雷達圖01.png" alt="技能雷達圖" class="w-36 lg:w-72 h-auto mx-auto radar-image">
+                                <img src="images/個性雷達圖01.png" alt="個性雷達圖" class="w-36 lg:w-72 h-auto mx-auto radar-image">
+                            </div>
+
+                            <!-- 棋子和頭像 -->
+                            <div class="flex flex-col lg:flex-row gap-2 lg:gap-3 items-center justify-center">
+                                <div class="flex gap-3 lg:gap-4 justify-center">
+                                    <div class="text-center">
+                                        <img src="images/角色棋子-彈間陽子-正.png" alt="角色棋子正面" class="w-24 lg:w-40 h-24 lg:h-60 object-contain mb-2 chess-image mx-auto">
+                                        <span class="block text-white text-sm lg:text-lg chess-label">▲角色棋子正面</span>
+                                    </div>
+                                    <div class="text-center">
+                                        <img src="images/角色棋子-彈間陽子-反.png" alt="角色棋子反面" class="w-24 lg:w-40 h-24 lg:h-60 object-contain mb-2 chess-image mx-auto">
+                                        <span class="block text-white text-sm lg:text-lg chess-label">▲角色棋子反面</span>
+                                    </div>
+                                </div>
+                                <img src="images/頭像-彈間陽子-第二版.png" alt="角色頭像" class="w-28 lg:w-44 h-28 lg:h-44 object-contain rounded-full border-2 border-cyan-400 avatar-image mx-auto lg:ml-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第三頁：場景圖 -->
+                <div class="swiper-slide scene-slide scene-responsive">
+                    <div class="slide-content flex flex-col items-center justify-center h-full">
+                        <div class="container mx-auto px-4 md:px-6 lg:px-8 w-full scene-container">
+                            <!-- 場景圖片網格 -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8 mb-6 lg:mb-8 w-full max-w-7xl mx-auto">
+                                <div class="text-center">
+                                    <img src="images/市中心 (AI 生成).png" alt="AI生成市中心" class="scene-image w-full h-32 sm:h-40 md:h-44 lg:h-48 xl:h-64 object-contain rounded-lg mb-3 border border-cyan-400 border-opacity-30 shadow-lg shadow-cyan-400/20 bg-black bg-opacity-20">
+                                    <p class="text-white text-sm md:text-base lg:text-lg font-medium">▲AI 參考圖</p>
+                                </div>
+                                <div class="text-center">
+                                    <img src="images/市中心 (白模).png" alt="白模市中心" class="scene-image w-full h-32 sm:h-40 md:h-44 lg:h-48 xl:h-64 object-contain rounded-lg mb-3 border border-cyan-400 border-opacity-30 shadow-lg shadow-cyan-400/20 bg-black bg-opacity-20">
+                                    <p class="text-white text-sm md:text-base lg:text-lg font-medium">▲初稿</p>
+                                </div>
+                                <div class="text-center">
+                                    <img src="images/市中心 (AI 生成).png" alt="AI生成市中心" class="scene-image w-full h-32 sm:h-40 md:h-44 lg:h-48 xl:h-64 object-contain rounded-lg mb-3 border border-cyan-400 border-opacity-30 shadow-lg shadow-cyan-400/20 bg-black bg-opacity-20">
+                                    <p class="text-white text-sm md:text-base lg:text-lg font-medium">▲AI 生成圖</p>
+                                </div>
+                                <div class="text-center">
+                                    <img src="images/市中心 (白模).png" alt="白模市中心" class="scene-image w-full h-32 sm:h-40 md:h-44 lg:h-48 xl:h-64 object-contain rounded-lg mb-3 border border-cyan-400 border-opacity-30 shadow-lg shadow-cyan-400/20 bg-black bg-opacity-20">
+                                    <p class="text-white text-sm md:text-base lg:text-lg font-medium">▲白模圖</p>
+                                </div>
+                            </div>
+                            <!-- 主場景標題 -->
+                            <div class="text-center">
+                                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white cyber-text-glow">▲主機之城</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第四頁：小遊戲 -->
+                <div class="swiper-slide game-slide">
+                    <div class="slide-content stock-game-container">
+                        <!-- 股票遊戲主容器 -->
+                        <div id="stockGameApp" class="w-full h-full flex flex-col relative">
+                            <!-- 遊戲標題 -->
+                            <div class="text-center mb-3 flex-shrink-0">
+                                <h2 class="text-2xl lg:text-3xl font-bold cyber-text-glow mb-1">股票投資模擬</h2>
+                                <p class="text-sm text-gray-300">使用真實股票數據進行模擬投資</p>
+                            </div>
+
+                            <!-- 通知overlay -->
+                            <div v-if="gameStatus"
+                                 class="notification-overlay"
+                                 :class="'notification-' + gameStatus.type">
+                                <div class="notification-content">
+                                    <span class="notification-text">{{ gameStatus.message }}</span>
+                                </div>
+                            </div>
+
+                            <!-- 主要遊戲區域 -->
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4 flex-1 min-h-0">
+                                <!-- 左側：股票信息和圖表 -->
+                                <div class="lg:col-span-2 flex flex-col space-y-2">
+                                    <!-- 股票信息卡片 -->
+                                    <div class="glass-effect p-3 rounded-lg border border-cyan-400 border-opacity-30 flex-shrink-0">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <div>
+                                                <h3 class="text-xl font-bold text-white">{{ stockInfo.symbol || 'AAPL' }}</h3>
+                                                <p class="text-gray-300 text-sm">{{ stockInfo.name || 'Apple Inc.' }}</p>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="text-2xl font-bold text-white">${{ stockInfo.currentPrice || '150.00' }}</div>
+                                                <div class="text-sm" :class="stockInfo.change >= 0 ? 'text-green-400' : 'text-red-400'">
+                                                    {{ stockInfo.change >= 0 ? '+' : '' }}{{ stockInfo.change || '+2.50' }} ({{ stockInfo.changePercent || '+1.69' }}%)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-xs text-gray-400">
+                                            最後更新: {{ stockInfo.lastUpdate || '載入中...' }}
+                                        </div>
+                                    </div>
+
+                                    <!-- 圖表區域 -->
+                                    <div class="glass-effect p-3 rounded-lg border border-cyan-400 border-opacity-30 flex-1 min-h-0">
+                                        <canvas id="stockChart" class="w-full h-full"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- 右側：玩家信息和操作 -->
+                                <div class="flex flex-col space-y-1 h-full overflow-hidden">
+                                    <!-- 玩家資產信息 -->
+                                    <div class="glass-effect p-3 rounded-lg border border-cyan-400 border-opacity-30 portfolio-container">
+                                        <h3 class="text-base font-bold text-white mb-2 cyber-text-glow">投資組合</h3>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between">
+                                                <span class="text-gray-300">戶頭餘額:</span>
+                                                <span class="text-white font-bold">${{ formatNumber(playerData.cashBalance) }}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-gray-300">股票投資:</span>
+                                                <span class="text-white font-bold">${{ formatNumber(playerData.stockInvestment) }}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-gray-300">持有股數:</span>
+                                                <span class="text-white font-bold">{{ playerData.shares }} 股</span>
+                                            </div>
+                                            <hr class="border-gray-600">
+                                            <div class="flex justify-between">
+                                                <span class="text-gray-300">總資產:</span>
+                                                <span class="text-cyan-400 font-bold text-lg">${{ formatNumber(playerData.totalValue) }}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-gray-300">損益:</span>
+                                                <span :class="playerData.profitLoss >= 0 ? 'text-green-400' : 'text-red-400'" class="font-bold">
+                                                    {{ playerData.profitLoss >= 0 ? '+' : '' }}${{ formatNumber(Math.abs(playerData.profitLoss)) }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 交易操作 -->
+                                    <div class="glass-effect p-3 rounded-lg border border-cyan-400 border-opacity-30 trading-container">
+                                        <h3 class="text-base font-bold text-white mb-2 cyber-text-glow">交易操作</h3>
+                                        <div class="space-y-2">
+                                            <div>
+                                                <label class="block text-gray-300 text-sm mb-1">交易金額 ($)</label>
+                                                <input
+                                                    type="number"
+                                                    v-model="tradeAmount"
+                                                    placeholder="輸入金額"
+                                                    class="w-full px-3 py-2 bg-black bg-opacity-50 border border-gray-600 rounded text-white focus:border-cyan-400 focus:outline-none"
+                                                    min="0"
+                                                    step="0.01"
+                                                >
+                                            </div>
+                                            <div class="grid grid-cols-3 gap-2">
+                                                <button
+                                                    @click="buyStock"
+                                                    :disabled="!canBuy"
+                                                    class="trade-button buy"
+                                                >
+                                                    買入
+                                                </button>
+                                                <button
+                                                    @click="sellStock"
+                                                    :disabled="!canSell"
+                                                    class="trade-button sell"
+                                                >
+                                                    賣出
+                                                </button>
+                                                <button
+                                                    @click="resetGame"
+                                                    class="trade-button reset"
+                                                >
+                                                    重置
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 交易記錄 -->
+                                    <div class="glass-effect p-3 rounded-lg border border-cyan-400 border-opacity-30 transaction-record-container">
+                                        <h3 class="text-base font-bold text-white mb-2 cyber-text-glow flex-shrink-0">交易記錄</h3>
+                                        <div class="transaction-scroll-area">
+                                            <div v-if="transactionHistory.length === 0" class="text-gray-400 text-sm text-center py-4">
+                                                暫無交易記錄
+                                            </div>
+                                            <div class="space-y-2">
+                                                <div v-for="transaction in transactionHistory.slice().reverse().slice(0, 10)" :key="transaction.id"
+                                                     class="transaction-item" :class="transaction.type">
+                                                    <div class="flex justify-between items-start mb-1">
+                                                        <span class="font-medium" :class="transaction.type === 'buy' ? 'text-green-400' : 'text-red-400'">
+                                                            {{ transaction.type === 'buy' ? '買入' : '賣出' }}
+                                                        </span>
+                                                        <span class="text-white font-bold">${{ formatNumber(transaction.amount) }}</span>
+                                                    </div>
+                                                    <div class="flex justify-between items-center text-xs">
+                                                        <span class="text-gray-400">{{ transaction.timestamp }}</span>
+                                                        <span class="text-gray-300">${{ transaction.price.toFixed(2) }}/股</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Swiper JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- 自定義腳本文件 -->
+    <script src="script.js"></script>
+    <script src="stock-game.js"></script></script>
+</body>
+</html>

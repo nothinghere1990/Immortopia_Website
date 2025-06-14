@@ -1,0 +1,860 @@
+/* 賽博克大富翁 - 主要樣式文件 */
+
+/* CSS 變量定義 */
+:root {
+    --cyber-blue: #00f5ff;
+    --cyber-purple: #8a2be2;
+    --dark-bg: #0a0a0a;
+    --dark-secondary: #1a1a2e;
+}
+
+/* 基礎樣式 */
+body {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-secondary) 100%);
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+    overflow-x: hidden;
+}
+
+/* 賽博克效果 - 統一的發光效果 */
+.cyber-glow {
+    box-shadow: 0 0 20px var(--cyber-blue);
+    border: 1px solid var(--cyber-blue);
+}
+
+.cyber-text-glow {
+    text-shadow: 0 0 10px var(--cyber-blue);
+}
+
+/* 統一的圖片發光效果 */
+.cyber-image-glow {
+    filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.3));
+    transition: transform 0.3s ease;
+}
+
+/* 統一的懸浮效果 */
+.cyber-hover-transform {
+    transition: all 0.3s ease;
+}
+
+.cyber-hover-transform:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 245, 255, 0.3);
+}
+
+/* Header 樣式 */
+.logo-container img {
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+    transition: all 0.3s ease;
+}
+
+.logo-container img:hover {
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.8));
+    transform: scale(1.05);
+}
+
+.nav-container {
+    position: relative;
+}
+
+.nav-bg {
+    height: auto;
+    max-height: 60px;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+
+.nav-buttons {
+    z-index: 10;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 導航項目樣式 */
+.nav-item {
+    transition: all 0.3s ease;
+    position: relative;
+    font-weight: 500;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.nav-item:hover {
+    color: #60a5fa !important;
+    text-shadow: 0 0 20px rgba(96, 165, 250, 0.8);
+    transform: translateY(-2px);
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--cyber-blue);
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after {
+    width: 100%;
+}
+
+/* Swiper 容器樣式 */
+.swiper {
+    width: 100%;
+    height: 100vh;
+}
+
+/* 頁面容器樣式 */
+.swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-secondary) 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+/* 背景圖片設置 */
+.home-slide {
+    background-image: url('images/Home_Bg.png');
+}
+
+.character-slide,
+.scene-slide,
+.game-slide {
+    background-image: url('images/Others_Bg.png');
+}
+
+/* Fade 效果樣式 - 簡化版本，讓 Swiper.js 控制轉場 */
+.swiper-fade .swiper-slide {
+    pointer-events: none;
+    background-attachment: scroll;
+}
+
+.swiper-fade .swiper-slide-active {
+    pointer-events: auto;
+}
+
+/* 背景遮罩層 */
+.swiper-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.home-slide::before {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.character-slide::before,
+.scene-slide::before,
+.game-slide::before {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* 內容區域樣式 */
+.slide-content {
+    text-align: center;
+    color: white;
+    max-width: 800px;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 245, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* 首頁特殊樣式 - 移除中央內容框 */
+.home-slide .slide-content {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    max-width: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0;
+}
+
+/* 場景頁面特殊樣式 - 移除寬度限制和所有背景效果 */
+.scene-slide .slide-content {
+    max-width: none;
+    width: 100%;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+/* 場景頁面圖片懸浮效果 */
+.scene-slide img,
+.scene-image {
+    transition: all 0.3s ease;
+}
+
+.scene-slide img:hover,
+.scene-image:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 245, 255, 0.3);
+    border-color: rgba(0, 245, 255, 0.6);
+}
+
+/* 移除場景頁面外層容器的 hover 效果 */
+.scene-slide .slide-content:hover {
+    box-shadow: none;
+    transform: none;
+}
+
+/* 場景頁面響應式設計 */
+.scene-responsive {
+    padding-top: 100px;
+    padding-bottom: 20px;
+}
+
+.scene-container {
+    height: calc(100vh - 120px);
+}
+
+/* 響應式場景頁面設計 - 合併重複規則 */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .scene-responsive {
+        padding-top: 90px;
+        padding-bottom: 15px;
+    }
+    .scene-container {
+        height: calc(100vh - 105px);
+    }
+}
+
+@media (max-width: 767px) {
+    .scene-responsive {
+        padding-top: 80px;
+        padding-bottom: 10px;
+    }
+    .scene-container {
+        height: calc(100vh - 90px);
+    }
+    .scene-slide img:hover {
+        transform: translateY(-3px) scale(1.01);
+        box-shadow: 0 8px 25px rgba(0, 245, 255, 0.25);
+    }
+}
+
+@media (max-width: 480px) {
+    .scene-responsive {
+        padding-top: 70px;
+        padding-bottom: 10px;
+    }
+    .scene-container {
+        height: calc(100vh - 80px);
+    }
+    .scene-slide img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 245, 255, 0.2);
+    }
+}
+
+/* 通用內容區域懸浮效果 */
+.slide-content:hover {
+    box-shadow: 0 12px 40px rgba(0, 245, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+/* 首頁和場景頁面不需要 hover 效果 */
+.home-slide .slide-content:hover,
+.scene-slide .slide-content:hover {
+    box-shadow: none;
+    transform: none;
+}
+
+/* 賽博克按鈕樣式 */
+.cyber-button {
+    background: transparent;
+    border: 2px solid var(--cyber-blue);
+    color: var(--cyber-blue);
+    padding: 12px 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.cyber-button:hover {
+    background: var(--cyber-blue);
+    color: black;
+    box-shadow: 0 0 30px var(--cyber-blue);
+}
+
+.cyber-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.cyber-button:hover::before {
+    left: 100%;
+}
+
+/* 卡片樣式 - 統一懸浮效果 */
+.character-card,
+.investment-simulator {
+    transition: all 0.3s ease;
+}
+
+.character-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+}
+
+.scene-card {
+    transition: transform 0.3s ease;
+}
+
+.scene-card:hover {
+    transform: scale(1.05);
+}
+
+.investment-simulator:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 40px rgba(0, 245, 255, 0.2);
+}
+
+/* 角色頁面響應式設計 - 調整 padding 而不是強制定位 */
+@media (max-width: 1024px) {
+    .character-slide {
+        padding-top: 140px;
+        padding-bottom: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .character-slide {
+        padding-top: 120px;
+        padding-bottom: 20px;
+    }
+    .character-page-container {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .character-slide {
+        padding-top: 100px;
+        padding-bottom: 15px;
+    }
+    .character-page-container {
+        padding: 0 0.5rem;
+    }
+}
+
+/* 主要響應式設計 */
+@media (max-width: 768px) {
+    /* Header 響應式 */
+    .nav-container {
+        display: none;
+    }
+    .logo-container img {
+        height: 40px;
+    }
+
+    /* 手機版選單 */
+    header button {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 60;
+        position: relative;
+    }
+    header .md\\:hidden[v-show] {
+        z-index: 55;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* 內容區域響應式 */
+    .home-slide .slide-content .container {
+        padding: 1rem;
+    }
+    .home-slide .slide-content .absolute {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        max-width: 100%;
+        margin: 2rem auto;
+        text-align: center;
+    }
+    .slide-content {
+        padding: 1rem;
+        max-width: 90%;
+        background: rgba(0, 0, 0, 0.6);
+    }
+    .slide-content h2 {
+        font-size: 3rem;
+    }
+    .slide-content h3 {
+        font-size: 1.5rem;
+    }
+    .cyber-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    .swiper-slide {
+        background-attachment: scroll;
+    }
+}
+
+@media (max-width: 480px) {
+    .slide-content h2 {
+        font-size: 2.5rem;
+    }
+    .slide-content h3 {
+        font-size: 1.2rem;
+    }
+    .slide-content p {
+        font-size: 1rem;
+    }
+}
+
+/* 角色詳細頁面樣式 - 配合 Swiper 的 flex 佈局 */
+.character-slide {
+    padding-top: 160px; /* 避開 header + 間距 */
+    padding-bottom: 40px; /* 底部間距 */
+    box-sizing: border-box;
+}
+
+.character-page-container {
+    /* 移除強制定位，讓 flex 自動居中 */
+    width: 100%;
+    max-width: 100%;
+}
+
+.character-name-box {
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--cyber-blue);
+    border-radius: 15px;
+    padding: 1rem 2rem;
+    backdrop-filter: blur(10px);
+}
+
+/* 角色頁面圖片效果 - 繼承統一的發光效果 */
+.character-image {
+    filter: drop-shadow(0 0 20px rgba(0, 245, 255, 0.3));
+}
+
+.skill-title,
+.chess-label {
+    text-shadow: 0 0 10px var(--cyber-blue);
+}
+
+.radar-image {
+    filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.2));
+}
+
+.chess-image,
+.avatar-image {
+    filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.4));
+    transition: transform 0.3s ease;
+}
+
+.chess-image:hover {
+    transform: scale(1.1);
+}
+
+.avatar-image:hover {
+    transform: scale(1.05);
+}
+
+/* 動畫效果 */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 245, 255, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 245, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 245, 255, 0);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+/* 載入動畫 */
+.loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid var(--cyber-blue);
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 滾動條樣式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--cyber-blue);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cyber-purple);
+}
+
+/* 股票遊戲專用樣式 */
+.stock-game-container {
+    max-width: 1200px !important;
+    width: 90% !important;
+    height: calc(100vh - 160px) !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 32px rgba(0, 245, 255, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 20px !important;
+    padding: 1rem !important;
+    margin: 120px auto 20px auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.stock-game-container .slide-content:hover {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* 股票遊戲卡片樣式 */
+.stock-game-card {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 245, 255, 0.3);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.stock-game-card:hover {
+    border-color: rgba(0, 245, 255, 0.6);
+    box-shadow: 0 8px 32px rgba(0, 245, 255, 0.2);
+}
+
+/* 股票價格顯示樣式 */
+.stock-price-positive {
+    color: #10b981;
+}
+
+.stock-price-negative {
+    color: #ef4444;
+}
+
+/* 交易按鈕樣式 */
+.trade-button {
+    background: transparent;
+    border: 2px solid;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.trade-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.trade-button.buy {
+    border-color: #10b981;
+    color: #10b981;
+}
+
+.trade-button.buy:hover:not(:disabled) {
+    background: #10b981;
+    color: white;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+.trade-button.sell {
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.trade-button.sell:hover:not(:disabled) {
+    background: #ef4444;
+    color: white;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+.trade-button.reset {
+    border-color: #6b7280;
+    color: #6b7280;
+}
+
+.trade-button.reset:hover:not(:disabled) {
+    background: #6b7280;
+    color: white;
+    box-shadow: 0 0 20px rgba(107, 114, 128, 0.4);
+}
+
+/* 輸入框樣式 */
+.stock-input {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #4b5563;
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: white;
+    transition: border-color 0.3s ease;
+}
+
+.stock-input:focus {
+    outline: none;
+    border-color: var(--cyber-blue);
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+}
+
+/* 交易記錄樣式 */
+.transaction-item {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 4px;
+    border-left: 3px solid;
+    flex-shrink: 0;
+}
+
+.transaction-item.buy {
+    border-left-color: #10b981;
+}
+
+.transaction-item.sell {
+    border-left-color: #ef4444;
+}
+
+/* 交易記錄滾動區域樣式 */
+.transaction-scroll-area {
+    scrollbar-width: thin;
+    scrollbar-color: var(--cyber-blue) rgba(0, 0, 0, 0.3);
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+    min-height: 0;
+}
+
+.transaction-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.transaction-scroll-area::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+.transaction-scroll-area::-webkit-scrollbar-thumb {
+    background: var(--cyber-blue);
+    border-radius: 3px;
+    transition: background 0.3s ease;
+}
+
+.transaction-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: var(--cyber-purple);
+}
+
+/* 右側面板區域高度控制 */
+.portfolio-container {
+    height: 180px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.trading-container {
+    height: 200px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+/* 交易記錄容器使用剩餘空間 */
+.transaction-record-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 80px;
+    overflow: auto;
+}
+
+/* 通知overlay樣式 */
+.notification-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    pointer-events: none;
+    animation: notificationFadeInOut 3s ease-in-out forwards;
+}
+
+.notification-content {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    border: 2px solid;
+    min-width: 200px;
+    text-align: center;
+}
+
+.notification-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* 不同類型的通知顏色 */
+.notification-success .notification-content {
+    border-color: #10b981;
+    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+}
+
+.notification-success .notification-text {
+    color: #10b981;
+}
+
+.notification-error .notification-content {
+    border-color: #ef4444;
+    box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3);
+}
+
+.notification-error .notification-text {
+    color: #ef4444;
+}
+
+.notification-info .notification-content {
+    border-color: var(--cyber-blue);
+    box-shadow: 0 8px 32px rgba(0, 245, 255, 0.3);
+}
+
+.notification-info .notification-text {
+    color: var(--cyber-blue);
+}
+
+/* 通知動畫 */
+@keyframes notificationFadeInOut {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    15% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    85% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+}
+
+/* 響應式設計 */
+@media (max-width: 1024px) {
+    .stock-game-container {
+        width: 95% !important;
+        height: calc(100vh - 140px) !important;
+        margin: 100px auto 20px auto !important;
+        padding: 0.75rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .stock-game-container {
+        width: 95% !important;
+        height: calc(100vh - 120px) !important;
+        margin: 80px auto 20px auto !important;
+        padding: 0.5rem !important;
+    }
+
+    .stock-game-container h2 {
+        font-size: 1.5rem !important;
+    }
+
+    .trade-button {
+        padding: 6px 12px;
+        font-size: 0.875rem;
+    }
+
+    /* 手機版時使用單列佈局 */
+    .stock-game-container .grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .stock-game-container {
+        width: 98% !important;
+        height: calc(100vh - 100px) !important;
+        margin: 60px auto 20px auto !important;
+        padding: 0.5rem !important;
+    }
+
+    .stock-game-container h2 {
+        font-size: 1.25rem !important;
+    }
+}
+
+/* 首頁載入動畫 */
+@keyframes fadeInBackground {
+    from {
+        opacity: 0;
+        transform: scale(1.02);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.home-slide {
+    animation: fadeInBackground 1s ease-in-out;
+}
